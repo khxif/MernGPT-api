@@ -1,16 +1,4 @@
-import exp from "constants";
 import mongoose from "mongoose";
-
-const chatSchema = new mongoose.Schema({
-  role: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
-});
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -26,7 +14,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  chats: [chatSchema],
 });
 
 const User = mongoose.model("User", UserSchema);
