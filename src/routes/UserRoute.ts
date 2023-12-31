@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import { Router,Request, Response } from "express";
 import {
   userLogin,
   userLogout,
@@ -7,7 +7,7 @@ import {
 } from "../controllers/UserController";
 import { verifyToken } from "../utils/token-manager";
 
-const router = express.Router();
+const router = Router();
 
 router.get("/", (req: Request, res: Response) => {
   res.send("hello");
