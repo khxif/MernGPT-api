@@ -20,7 +20,10 @@ export const userSignUp = async (req: Request, res: Response) => {
       httpOnly: true,
       signed: true,
       path: "/",
-      domain: "localhost",
+      domain:
+        process.env.NODE_ENV === "production"
+          ? "localhost"
+          : "https://merngpt-server.onrender.com",
     });
     const token = await createToken(user?._id.toString(), user?.email, "7d");
 
@@ -32,7 +35,10 @@ export const userSignUp = async (req: Request, res: Response) => {
       signed: true,
       expires,
       path: "/",
-      domain: "localhost",
+      domain:
+        process.env.NODE_ENV === "production"
+          ? "https://merngpt-server.onrender.com"
+          : "localhost",
     });
     res.status(200).json(newUser);
   } catch (error) {
@@ -54,7 +60,10 @@ export const userLogin = async (req: Request, res: Response) => {
           httpOnly: true,
           signed: true,
           path: "/",
-          domain: "localhost",
+          domain:
+            process.env.NODE_ENV === "production"
+              ? "https://merngpt-server.onrender.com"
+              : "localhost",
         });
         const token = await createToken(
           user?._id.toString(),
@@ -70,7 +79,10 @@ export const userLogin = async (req: Request, res: Response) => {
           signed: true,
           expires,
           path: "/",
-          domain: "localhost",
+          domain:
+            process.env.NODE_ENV === "production"
+              ? "https://merngpt-server.onrender.com"
+              : "localhost",
         });
         res.status(200).json(user);
       } else return res.json({ message: "Invalid credentials" });
@@ -91,4 +103,17 @@ export const verifyUser = async (req: Request, res: Response) => {
     return res.status(401).send("Permissions didnt matched");
 
   res.status(200).json(user);
+};
+
+export const userLogout = async (req: Request, res: Response) => {
+  res.clearCookie(TOKEN_NAME, {
+    httpOnly: true,
+    signed: true,
+    path: "/",
+    domain:
+      process.env.NODE_ENV === "production"
+        ? "https://merngpt-server.onrender.com"
+        : "localhost",
+  });
+  res.json({message: 'Logout successful'})
 };
