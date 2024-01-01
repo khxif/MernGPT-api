@@ -1,10 +1,10 @@
-import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import AppRoutes from "./routes/index";
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 const PORT = process.env.PORT || 8080;
