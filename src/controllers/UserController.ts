@@ -20,7 +20,7 @@ export const userSignUp = async (req: Request, res: Response) => {
       httpOnly: true,
       signed: true,
       path: "/",
-      secure: true,
+      domain: "localhost",
     });
     const token = await createToken(user?._id.toString(), user?.email, "7d");
 
@@ -32,7 +32,7 @@ export const userSignUp = async (req: Request, res: Response) => {
       signed: true,
       expires,
       path: "/",
-      secure: true,
+      domain: "localhost",
     });
     res.status(200).json(newUser);
   } catch (error) {
@@ -54,7 +54,7 @@ export const userLogin = async (req: Request, res: Response) => {
           httpOnly: true,
           signed: true,
           path: "/",
-          secure: true,
+          domain: "localhost",
         });
         const token = await createToken(
           user?._id.toString(),
@@ -70,7 +70,7 @@ export const userLogin = async (req: Request, res: Response) => {
           signed: true,
           expires,
           path: "/",
-          secure: true,
+          domain: "localhost",
         });
         res.status(200).json(user);
       } else return res.json({ message: "Invalid credentials" });
@@ -94,11 +94,16 @@ export const verifyUser = async (req: Request, res: Response) => {
 };
 
 export const userLogout = async (req: Request, res: Response) => {
-  res.clearCookie(TOKEN_NAME, {
-    httpOnly: true,
-    signed: true,
-    path: "/",
-    secure: true,
-  });
-  res.json({ message: "Logout successful" });
+  try {
+    res.clearCookie(TOKEN_NAME, {
+      httpOnly: true,
+      signed: true,
+      path: "/",
+      domain: "localhost",
+    });
+    res.json({ message: "Logout successful" });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: "Something went wrong" });
+  }
 };
