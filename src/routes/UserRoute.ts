@@ -16,6 +16,6 @@ router.get("/", (req: Request, res: Response) => {
 router.post("/signup", userSignUp);
 router.post("/login", userLogin);
 router.get("/auth-status", verifyToken, verifyUser);
-router.get('/logout',userLogout)
+router.get('/logout',verifyToken,userLogout)
 
 export default router;

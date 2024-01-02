@@ -20,7 +20,6 @@ export const userSignUp = async (req: Request, res: Response) => {
       httpOnly: true,
       signed: true,
       path: "/",
-      domain: "localhost",
     });
     const token = await createToken(user?._id.toString(), user?.email, "7d");
 
@@ -32,7 +31,6 @@ export const userSignUp = async (req: Request, res: Response) => {
       signed: true,
       expires,
       path: "/",
-      domain: "localhost",
     });
     res.status(200).json(newUser);
   } catch (error) {
@@ -54,7 +52,6 @@ export const userLogin = async (req: Request, res: Response) => {
           httpOnly: true,
           signed: true,
           path: "/",
-          domain: "localhost",
         });
         const token = await createToken(
           user?._id.toString(),
@@ -70,7 +67,6 @@ export const userLogin = async (req: Request, res: Response) => {
           signed: true,
           expires,
           path: "/",
-          domain: "localhost",
         });
         res.status(200).json(user);
       } else return res.json({ message: "Invalid credentials" });
@@ -95,11 +91,18 @@ export const verifyUser = async (req: Request, res: Response) => {
 
 export const userLogout = async (req: Request, res: Response) => {
   try {
+    const user = await User.findById(res.locals.jwtData.id);
+
+    if (!user)
+      return res.status(401).send("User not registered or Token malfunctioned");
+
+    if (user._id.toString() !== res.locals.jwtData.id)
+      return res.status(401).send("Permissions didnt matched");
+
     res.clearCookie(TOKEN_NAME, {
       httpOnly: true,
       signed: true,
       path: "/",
-      domain: "localhost",
     });
     res.json({ message: "Logout successful" });
   } catch (error) {
