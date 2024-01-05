@@ -20,6 +20,7 @@ export const userSignUp = async (req: Request, res: Response) => {
       httpOnly: true,
       signed: true,
       path: "/",
+      secure: true,
     });
     const token = await createToken(user?._id.toString(), user?.email, "7d");
 
@@ -31,6 +32,8 @@ export const userSignUp = async (req: Request, res: Response) => {
       signed: true,
       expires,
       path: "/",
+
+      secure: true,
     });
     res.status(200).json(newUser);
   } catch (error) {
@@ -52,6 +55,7 @@ export const userLogin = async (req: Request, res: Response) => {
           httpOnly: true,
           signed: true,
           path: "/",
+          secure: true,
         });
         const token = await createToken(
           user?._id.toString(),
@@ -67,6 +71,8 @@ export const userLogin = async (req: Request, res: Response) => {
           signed: true,
           expires,
           path: "/",
+
+          secure: true,
         });
         res.status(200).json(user);
       } else return res.json({ message: "Invalid credentials" });
@@ -103,6 +109,7 @@ export const userLogout = async (req: Request, res: Response) => {
       httpOnly: true,
       signed: true,
       path: "/",
+      secure: true,
     });
     res.json({ message: "Logout successful" });
   } catch (error) {
