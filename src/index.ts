@@ -16,10 +16,10 @@ app.use(morgan("dev"));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   cors({
-    // origin:
-    //   process.env.NODE_ENV === "production"
-    //     ? "https://mern-gpt.vercel.app/"
-    //     : "http://localhost:5173",
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://mern-gpt.vercel.app/"
+        : "http://localhost:5173",
     credentials: true,
   })
 );
