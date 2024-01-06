@@ -17,7 +17,6 @@ export const userSignUp = async (req: Request, res: Response) => {
     const newUser = await user.save();
 
     res.clearCookie(TOKEN_NAME, {
-      httpOnly: true,
       signed: true,
       path: "/",
       secure: true,
@@ -28,7 +27,6 @@ export const userSignUp = async (req: Request, res: Response) => {
     expires.setDate(expires.getDate() + 7);
 
     res.cookie(TOKEN_NAME, token, {
-      httpOnly: true,
       signed: true,
       expires,
       path: "/",
@@ -52,7 +50,6 @@ export const userLogin = async (req: Request, res: Response) => {
 
       if (isPasswordValid) {
         res.clearCookie(TOKEN_NAME, {
-          httpOnly: true,
           signed: true,
           path: "/",
           secure: true,
@@ -67,7 +64,6 @@ export const userLogin = async (req: Request, res: Response) => {
         expires.setDate(expires.getDate() + 7);
 
         res.cookie(TOKEN_NAME, token, {
-          httpOnly: true,
           signed: true,
           expires,
           path: "/",
@@ -106,7 +102,6 @@ export const userLogout = async (req: Request, res: Response) => {
       return res.status(401).send("Permissions didnt matched");
 
     res.clearCookie(TOKEN_NAME, {
-      httpOnly: true,
       signed: true,
       path: "/",
       secure: true,
