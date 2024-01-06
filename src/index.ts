@@ -18,7 +18,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://mern-gpt.vercel.app"
+        ? "https://mern-gpt.vercel.app/"
         : "http://localhost:5173",
     credentials: true,
   })
