@@ -10,6 +10,7 @@ dotenv.config();
 const PORT = process.env.PORT || 8080;
 
 const app = express();
+console.log(process.env.NODE_ENV);
 
 app.use(express.json());
 app.use(morgan("dev"));
@@ -17,9 +18,10 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   cors({
     origin:
-      process.env.NODE_ENV === "production"
-        ? "https://mern-gpt.vercel.app/"
-        : "http://localhost:5173",
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5173"
+        : "https://mern-gpt.vercel.app/",
+
     credentials: true,
   })
 );
