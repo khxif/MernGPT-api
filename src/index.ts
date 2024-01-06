@@ -20,7 +20,7 @@ app.use(
     origin:
       process.env.NODE_ENV === "development"
         ? "http://localhost:5173"
-        : "mern-gpt.vercel.app",
+        : "https://mern-gpt.vercel.app",
 
     credentials: true,
   })
